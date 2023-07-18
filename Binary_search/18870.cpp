@@ -10,7 +10,7 @@ vector <int> B(1000001);
 int binary_search(int k)
 {
     int st=0;
-    int en=n-1;
+    int en=A.size()-1;
     while(en > st)
     {
         int mid= (st+en) / 2;
@@ -38,9 +38,7 @@ int main()
     }   
     
     sort(A.begin(),A.begin()+n);
-    A.erase(unique(A.begin(),A.begin()+n),A.end());
-
-    cout << A.size();
+    A.erase(unique(A.begin(),A.begin()+n),A.end());  
 
     for(int i=0; i<n; i++)
       cout << binary_search(B[i]) << " ";
