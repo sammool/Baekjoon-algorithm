@@ -13,12 +13,17 @@ int main()
         cin >> A[i];
     sort(A,A+n);
 
-    long min=2000000001;
+    long Min=2000000001;
 
-    int st=0;
+
     int en=0;
     for(int st=0; st<n; st++)
     {
-        while()
+        while(A[en]-A[st] < m && en < n )
+            en++;
+        if(en==n)
+            break;
+        Min=min(Min,A[en]-A[st]);
     }
+    cout << Min;
 }
