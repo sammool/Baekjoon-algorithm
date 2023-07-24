@@ -4,10 +4,19 @@ using namespace std;
 
 int main()
 {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+
     int n;
     cin >> n;
     
-    vector <bool> state (n+5, true);
+    if(n==1)
+    {
+        cout << "0";
+        return 0;
+    }
+
+    vector <bool> state (n+1, true);
     vector <int> prime;
     
     for(int i=2; i<=n; i++)
@@ -23,26 +32,27 @@ int main()
         if(state[i])
             prime.push_back(i);
     }
+    //소수 구하기
 
     int sum=prime[0];
     int cnt=0;
     int en=0;
     int size = prime.size();
-    //소수 구하기는 완료
+
 
     for(int st=0; st<size; st++)
     {
-        while(sum < n && en <n)
+        while(sum < n && en < size)
         {
             en++;
-            sum+=prime[en];
+            if(en==size)          // en == size가 되면 size범위 초과
+                break;
+            sum+=prime.at(en);
         }
         if(sum == n)
             cnt++;
 
-        if(en == size)
-            break;
-        sum -= prime[st];
+        sum -= prime.at(st);
     }
     cout << cnt;
 }
