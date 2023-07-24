@@ -15,20 +15,26 @@ int main()
     
     int result = 100001;
 
+    int sum = arr[0];
+    int en = 0;
+    
     for(int st=0; st<n; st++)
     {
-        int sum=arr[st];
-        int en=st+1;
-        
         while(sum < s && en < n)
+        {    
+            en++;
             sum+=arr[en];
-        
+        }
+
         if(en==n)
-            continue;
+            break;
         result=min(result, en-st+1);
+
+        sum = sum - arr[st];
         
     }
-
+    if(result == 100001)
+        result = 0;
     cout << result;
 
 }
