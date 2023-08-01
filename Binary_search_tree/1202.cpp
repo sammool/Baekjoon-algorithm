@@ -1,5 +1,4 @@
 #include <iostream>
-#include <vector>
 #include <algorithm>
 #include <set>
 using namespace std;
@@ -28,20 +27,16 @@ int main()
 	
 	sort(v, v+n);
 	
+	long long sum=0;
 	for(int i=n-1; i>=0; i--)
 	{
-		for(auto j=bag.begin(); j!=bag.end(); j++)
-		{
-			if(v[i].second <= *j && v[i].first >[bag[j]])
-			{
-				[bag[j]] = v[i].first;
-				break;
-			}
-		}
+		auto it = bag.lower_bound(v[i].second); // O(log N) 이분탐색 lower_bound는 O(N)
+		if(it == bag.end())
+			continue;
+		sum+=v[i].first;
+		bag.erase(it);
 	}
-	int sum = 0;
-	for(auto i = res.begin(); i!=res.end(); i++)
-		sum += i->second;
+
 	cout << sum;
 		
 }
