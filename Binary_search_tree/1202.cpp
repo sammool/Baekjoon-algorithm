@@ -1,42 +1,40 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <map>
+#include <set>
 using namespace std;
 
 int main()
 {
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+
 	int n,k;
 	cin >> n >> k;
 	
-	vector <pair<int, int>> v;
-	vector <int> bag;
-	map <int,int> res;
+	pair<int, int> v [300001];
+	multiset <int> bag;
+	
 	
 	for(int i=0; i<n; i++)
-	{
-        int x,y;
-		cin >> x >> y;
-        v.push_back(make_pair(x,y));
-	}
+		cin >> v[i].second >> v[i].first;
 	
 	for(int i=0; i<k; i++)
 	{	
-        int x;
-		cin >> x;
-        bag.push_back(x);
-		res[bag[i]] = 0;
+       int x;
+	   cin >> x;
+	   bag.insert(x); 
 	}
 	
-	sort(v.begin(), v.end());
+	sort(v, v+n);
 	
-	for(int i=0; i<n; i++)
+	for(int i=n-1; i>=0; i--)
 	{
-		for(int j=0; j<k; j++)
+		for(auto j=bag.begin(); j!=bag.end(); j++)
 		{
-			if(v[i].first <= bag[j])
+			if(v[i].second <= *j && v[i].first >[bag[j]])
 			{
-				res[bag[j]] = max(res[bag[j]], v[i].second);
+				[bag[j]] = v[i].first;
 				break;
 			}
 		}
