@@ -28,15 +28,20 @@ void query3(vector<int>::iterator &itr, int n)
 {
     auto tmp = itr;
     int move=0;
+   
    while(*itr == -1)
    {
+        itr++;
         if(itr == area.end())
             itr = area.begin();
-        itr++;
-        move++;                
+        move++;      
+        
+        if(move >= n)
+        { 
+            move = -1;
+            break;
+        }          
    }
-//    if(move >= n)
-//         move = -1;
   
    cout << move << '\n';
    itr = tmp;
