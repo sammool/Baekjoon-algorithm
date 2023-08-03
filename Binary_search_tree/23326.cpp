@@ -120,10 +120,9 @@ int main()
             case 2:
                 int x2;
                 cin >> x2;
-                loc += x2;
-               if(loc > x2)
-                    loc -= n;
-                break;
+                // loc = (loc + x2 ) % n;  loc가 0이 되면 안되기 때문에 안됨
+                loc = (loc + x2 -1) % n +1;
+                break;  
             
             case 3:
 
