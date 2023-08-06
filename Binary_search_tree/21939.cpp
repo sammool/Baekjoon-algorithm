@@ -1,30 +1,10 @@
 #include <iostream>
 #include <map>
+#include <set>
 using namespace std;
 
-map<int, int> list;
-
-void Recommend()
-{
-    int x;
-    cin >> x;
-    if(x == 1)    
-        cout << prev(list.end())->second;
-    else
-         cout << list.begin()->second;
-}
-
-void Add()
-{
-    int level,number;
-    cin >> level >> number;
-    list.insert(level,number);
-}
-
-void Solved()
-{
-    
-}
+map <int, int> list; //key가 번호
+set <pair<int,int>> level; //key가 난이도
 
 int main()
 {
@@ -33,9 +13,10 @@ int main()
     cin >> n;
     for(int i=0; i<n; i++)
     {
-        int number,level;
-        cin >> number >> level;
-        list.insert(level,number);
+        int number, n_level;
+        cin >> number >> n_level;
+        level.insert({n_level,number});
+        list[number] = n_level;
     }
 
     int m; 
@@ -46,10 +27,30 @@ int main()
         cin >> option;
 
         if(option == "recommend")
-            Recommend();
+        {
+            int x;
+            cin >> x;
+            if(x == 1)
+                cout << (*prev(level.end())).second << '\n';
+            else    
+                cout << (*level.begin()).second << '\n';
+
+        }
+
         else if (option == "add")
-            Add();
-        else 
-            Solved();
+         {
+            int n_level,number;
+            cin >> number >> n_level;
+            level.insert({n_level, number});
+            list[number] = n_level;
+        }
+
+        else
+        {
+            int number;
+            cin >> number;
+            level.erase({list[number], number});
+            list.erase(number);
+         }
     }
 }
