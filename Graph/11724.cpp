@@ -9,6 +9,7 @@ int main()
     bool vis[1001];
 
     int n,m;
+    cin >> n >> m;
     for(int i=0; i<m; i++)
     {
         int x,y;
@@ -43,4 +44,5 @@ int main()
         }
         cnt++;
     }
+    cout<<cnt;
 }
