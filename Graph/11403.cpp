@@ -1,7 +1,7 @@
 #include <iostream>
 #include <queue>
 using namespace std;
-
+// BFS풀이
 int adj [101][101];
 bool res [101][101];
 queue <int> q;
