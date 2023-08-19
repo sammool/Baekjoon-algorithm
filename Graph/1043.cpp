@@ -2,8 +2,8 @@
 using namespace std;
 
 vector <int> party[51];
+vector <int> adj[51];
 bool t_or_f[51];
-bool party_res[51];
 int main()
 {
     int n,m;
@@ -22,27 +22,51 @@ int main()
     {
         int x;
         cin >> x;
-        for(int j=1; j<=x; j++)
+        int prev, nxt;
+        cin >> prev;
+        party[i].push_back(prev);
+        for(int j=1; j<x; j++)
         {
-            int person;
-            cin>>person;
-            party[i].push_back(person);
+           cin >> nxt;
+           party[i].push_back(nxt);
+           adj[prev].push_back(nxt);
+           adj[nxt].push_back(prev);
         }
     }
-    for(int i=1; i<=m; i++)
+    
+    for(int i=1; i<=n; i++)
     {
         queue <int> q;
-        q.push(i);
+        if(t_or_f[i])
+            q.push(i);
         while(!q.empty())
         {
             int cur = q.front();
             q.pop();
-            for(int nxt : party[cur])
+            for(int nxt : adj[cur])
             {
                 if(t_or_f[nxt])
-                    
+                    continue;
+                q.push(nxt);
+                t_or_f[nxt] = true;
+            }      
+
+        }
+    }
+    int cnt = m;
+    for(int i=1; i<=m ;i++)
+    {
+      
+        for(int res : party[i])
+        {
+            if(t_or_f[res])
+            {
+                cnt--;
+                break;
             }
         }
     }
+
+    cout << cnt;
 
 }
