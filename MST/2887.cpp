@@ -44,9 +44,9 @@ int main()
         z[i] = make_pair(zv,i);
     }
 
-    sort(x,x+n+1);
-    sort(y,y+n+1);
-    sort(z,z+n+1);
+    sort(x+1,x+n+1);
+    sort(y+1,y+n+1);
+    sort(z+1,z+n+1); 
 
     for(int i=1; i<n; i++)
     {
