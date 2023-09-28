@@ -6,18 +6,6 @@ int nxt[102][102];
 int infi = 0xffffff;
 int n,m;
 
-int path(int i, int j)
-{
-    int cnt = 2;
-    cout << i << " ";
-    if(nxt[i][j] != j)
-    { 
-        cnt++;
-        cout << nxt[i][j] << " ";
-        path(nxt[i][j] , j);
-    }
-    cout << j << " "; 
-}
 
 int main()
 {
@@ -48,11 +36,13 @@ int main()
                 if(cost[i][j] > cost[i][k]+cost[k][j] )
                 {
                     cost[i][j] = cost[i][k]+cost[k][j];
-                    nxt[i][j] = nxt[i][k];
+                    nxt[i][j] = nxt[i][k]; // j
                 }
             }
         }
     }
+
+    //최단경로
     for(int i=1; i<=n; i++)
     {
         for(int j=1; j<=n; j++)
@@ -64,13 +54,34 @@ int main()
         }
         cout << '\n';
     }
+    
+
+    //경로복원
     for(int i=1; i<=n; i++)
     {
         for(int j=1; j<=n; j++)
         {
-          
+            if(cost[i][j] == 0 || cost[i][j] == infi)
+            {
+                cout << 0 <<'\n';
+                continue;
+            }
+
+            vector <int> path;
+            int st = i;
+            while(st != j)
+            {
+                path.push_back(st);
+                st = nxt[st][j];
+            }
+            path.push_back(j);
+
+            cout << path.size() << " ";
+            for(int element: path)
+                cout << element <<  " ";
+
+            cout << '\n';
+
         }
     }
-  
-
 }
