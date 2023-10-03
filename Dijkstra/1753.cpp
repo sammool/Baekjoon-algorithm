@@ -5,10 +5,13 @@ vector <pair<int,int>> adj[20002];
 priority_queue <pair<int,int>, vector<pair<int,int>>, 
                 greater <pair<int,int>> > pq;
 int dis[20002];
-int inf = 0xffff;
+int inf = 0xffffff;
 
 int main()
 {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+
     int n,m,start;
     cin >> n >> m;
     cin >> start;
@@ -24,14 +27,31 @@ int main()
     dis[start] = 0;
     pq.push({0,start});
 
-    while(true)
+    while(!pq.empty())
     {
-        int idx = pq.top().second;
-        for(auto nxt : adj[idx])
+        auto idx = pq.top();
+        pq.pop();
+        
+        if(dis[idx.second] != idx.first)  //최솟값으로 갱신이 여러번 됐을때 이전에 갱신된 값이 들어갈 수 있기 때문
+            continue;
+        
+        for(auto nxt : adj[idx.second])
         {
-            if()
+
+            if(dis[nxt.first] > dis[idx.second] + nxt.second)
+            {
+                dis[nxt.first] = dis[idx.second] + nxt.second;
+                pq.push({dis[nxt.first],nxt.first});
+            }
         }
     }
 
+    for(int i=1; i<=n; i++)
+    {
+        if(dis[i] == inf)
+            cout << "INF" << '\n';
+        else
+            cout << dis[i] << '\n';
+    }
 
 }
