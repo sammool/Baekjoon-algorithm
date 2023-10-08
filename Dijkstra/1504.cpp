@@ -1,16 +1,48 @@
 #include <bits/stdc++.h>
+#define X first
+#define Y second
+
 using namespace std;
+
 
 vector <pair<int,int>> adj[802];
 int dist[802];
-const int INF = 800001;
+const int INF = 1e9;
+
+int n,m;
+int a,b,cost;
+
+long long dijkstra(int st, int en)
+{
+    priority_queue <pair<int,int>, vector<pair<int,int>>, 
+                         greater<pair<int,int>> > pq;
+    fill(dist,dist+n+1,INF);
+    dist[st] = 0;
+    pq.push({0,st});
+    while(!pq.empty())
+    {
+        auto cur = pq.top();
+        pq.pop();
+        if(dist[cur.Y]!=cur.X)
+            continue;
+        for(auto nxt : adj[cur.Y])
+        {
+            if(dist[nxt.Y] <= dist[cur.Y] + nxt.X)
+                continue;
+            dist[nxt.Y] = dist[cur.Y] + nxt.X;
+            pq.push({dist[nxt.Y], nxt.Y});
+        }
+    }
+    return dist[en];
+}
 
 int main()
 {
-    int n,m;
+    ios::sync_with_stdio(0);
+    cin.tie(0);
     cin >> n >> m;
     
-    int a,b,cost;
+  
     for(int i=0; i<m; i++)
     {
         cin >> a >> b >> cost;
@@ -18,11 +50,20 @@ int main()
         adj[b].push_back({cost,a});
     }
 
-    for(int i=1; i<=n; i++)
-    {
-        priority_queue <pair<int,int>, vector<pair<int,int>>, 
-                         greater<pair<int,int>> > pq;
-        fill(dist,dist+n+1,INF);
-        dist[i] = 0;
-    }
+    int x,y;
+    cin >> x >> y;
+
+    long long res = INF;
+   
+    long long case1,case2;
+    case1 = dijkstra(1,x) + dijkstra(x,y) + dijkstra(y,n);
+    case2 = dijkstra(1,y) + dijkstra(y,x) + dijkstra(x,n);
+    if(case1 <= case2)
+        {res = min(res,case1);}
+    else
+        {res = min(res,case2);}
+
+    if(res >= INF)
+        res = -1;
+    cout << res;
 }
