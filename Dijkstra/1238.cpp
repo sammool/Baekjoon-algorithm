@@ -4,33 +4,34 @@
 using namespace std;
 
 vector <pair <int,int>> adj[1002];
-priority_queue <pair<int,int>, vector <pair<int,int>>, 
-                greater<pair<int,int>>> pq;
+
 int dist[1002];
 const int INF = 200000;
 
- int n,m,x;
+int n,m,x;
+int a,b;
 
 int dijkstra(int st, int en)
 {
+    priority_queue <pair<int,int>, vector <pair<int,int>>, 
+                greater<pair<int,int>>> pq;
     fill(dist,dist+n+1,INF);
     dist[st] = 0;
-    pq.push({0,x});
+    pq.push({0,st});
 
-    // while(!pq.empty())
-    // {
-    //     auto cur = pq.top();
-    //     pq.pop();
-    //     if(dist[cur.Y]!=cur.X)
-    //         continue;
-
-    //     for(auto nxt: adj[cur.Y])
-    //     {
-    //         if(dist[nxt.Y] <= dist[cur.Y] + nxt.X)
-    //             continue;
-    //         dist[nxt.Y] = dist[cur.Y] + nxt.X;
-    //         pq.push({dist[nxt.Y], nxt.Y });
-    //     }
+    while(!pq.empty())
+    {
+        auto cur = pq.top();
+        pq.pop();
+        if(dist[cur.Y]!=cur.X)
+            continue;
+        for(auto nxt: adj[cur.Y])
+        {
+            if(dist[nxt.Y] <= dist[cur.Y] + nxt.X)
+                continue;
+            dist[nxt.Y] = dist[cur.Y] + nxt.X;
+            pq.push({dist[nxt.Y], nxt.Y});
+        }
     }
     return dist[en];
 }
@@ -40,14 +41,19 @@ int main()
    
     cin >> n >> m >> x;
 
-    int a,b,time;
+    int time;
     for(int i=1; i<=m; i++)
     {
         cin >> a >> b >> time;
         adj[a].push_back({time,b});
     }
-  
 
+    int res = 0;
+    for(int i=1; i<=n; i++)
+    {
+        res = max(res,dijkstra(i,x)+dijkstra(x,i));
+    }
+    cout <<  res;
 }
 
 // //플로이드 풀이
