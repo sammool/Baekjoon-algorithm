@@ -2,10 +2,10 @@
 using namespace std;
 
 int n,m;
-int cost[1001];
-int INF = 1e9;
+long long cost[1001];
+long long INF = 1e10 +100;
 
-vector<pair<int,int>> adj[1001];
+vector<pair<int,int>> adj[100001];
 priority_queue <pair<int,int>, vector<pair<int,int>>,
                 greater<pair<int,int>> > pq;
 
@@ -38,7 +38,7 @@ int main(){
         for(auto nxt : adj[idx.second]){
             if(cost[nxt.first] > cost[idx.second] + nxt.second ){
                 cost[nxt.first] = cost[idx.second] + nxt.second;
-                pq.push({cost[nxt.first], nxt.second});
+                pq.push({cost[nxt.first], nxt.first});
             }
         }
     }
